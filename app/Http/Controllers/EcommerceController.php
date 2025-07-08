@@ -37,7 +37,7 @@ class EcommerceController extends Controller
             case 4:
                 $o_column='price';
                 $o_order='DESC';
-                break;            
+                break;           
             default:
                 $o_column='id';
                 $o_order='DESC';

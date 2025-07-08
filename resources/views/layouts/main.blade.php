@@ -8,14 +8,14 @@
   <link rel="icon" href="">
   <title></title>
     
-  <link rel="shortcut icon" href="{{ secure_asset('assets/images/about-1.jpg') }}" type="image/x-icon">
+  <link rel="shortcut icon" href="{{ asset('assets/images/about-1.jpg') }}" type="image/x-icon">
   <link rel="preconnect" href="https://fonts.gstatic.com/">
   <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Allura&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{{ secure_asset('assets/css/plugins/swiper.min.css') }}" type="text/css" />
-  <link rel="stylesheet" type="text/css" href="{{ secure_asset('css/sweetalert.min.css') }}">
-  <link rel="stylesheet" href="{{ secure_asset('assets/css/style.css') }}" type="text/css" />
-  <link rel="stylesheet" href="{{ secure_asset('assets/css/custom.css') }}" type="text/css" />
+  <link rel="stylesheet" href="{{ asset('assets/css/plugins/swiper.min.css') }}" type="text/css" />
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/sweetalert.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" type="text/css" />
+  <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}" type="text/css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous" referrerpolicy="no-referrer">
     
   <style>
@@ -268,13 +268,38 @@
   <div id="scrollTop" class="visually-hidden end-0"></div>
   <div class="page-overlay"></div>
 
-  <script src="{{ secure_asset('assets/js/plugins/jquery.min.js') }}"></script>
-  <script src="{{ secure_asset('assets/js/plugins/bootstrap.bundle.min.js') }}"></script>
-  <script src="{{ secure_asset('assets/js/plugins/bootstrap-slider.min.js') }}"></script>
-  <script src="{{ secure_asset('js/sweetalert.min.js') }}"></script>  
-  <script src="{{ secure_asset('assets/js/plugins/swiper.min.js') }}"></script>
-  <script src="{{ secure_asset('assets/js/plugins/countdown.js') }}"></script>
-  <script src="{{ secure_asset('assets/js/theme.js') }}"></script>
+  <script src="{{ asset('assets/js/plugins/jquery.min.js') }}"></script>
+  <script src="{{ asset('assets/js/plugins/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ asset('assets/js/plugins/bootstrap-slider.min.js') }}"></script>
+  <script src="{{ asset('js/sweetalert.min.js') }}"></script>  
+  <script src="{{ asset('assets/js/plugins/swiper.min.js') }}"></script>
+  <script src="{{ asset('assets/js/plugins/countdown.js') }}"></script>
+  <script src="{{ asset('assets/js/theme.js') }}"></script>
+  
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    $(function(){
+        $(".cancel-order").on('click', function(e){
+            e.preventDefault();
+            var selectedForm = $(this).closest('form');
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You want to cancel this order?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#dc3545',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Yes, cancel it!',
+                cancelButtonText: 'No'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    selectedForm.submit();
+                }
+            });
+        });
+    });
+</script>
 
   
   
@@ -299,7 +324,7 @@
                   <ul>
                     <li class="product-item gap14 mb-10">
                       <div class="image no-bg">
-                        <img src="{{ secure_asset('uploads/products') }}/${item.image}" alt="${item.name}">
+                        <img src="{{ asset('uploads/products') }}/${item.image}" alt="${item.name}">
                       </div>
                       <div class="flex items-center justify-between gap20 flex-grow">
                         <div class="name">

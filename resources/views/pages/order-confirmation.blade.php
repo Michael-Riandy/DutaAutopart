@@ -98,7 +98,9 @@
           </div>
           {{-- <form action="{{ route('redirect.midtrans') }}" method="GET">
             <input type="hidden" name="order_id" value="{{ $order->id }}"> --}}
+          @if ($transaction->mode == 'transfer')
             <button class="col-lg-12 btna" type="submit" id="pay-button">Bayar Sekarang</button>
+          @endif
           {{-- </form> --}}
         </div>
       </div>

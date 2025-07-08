@@ -247,8 +247,9 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                    @if ($transaction->status !== 'settlement')
-                                    <button class="btna" type="submit" id="pay-button">Bayar Sekarang</button>
+                                    @if ($transaction->status !== 'settlement' && $transaction->mode == 'transfer')
+                                        <p class="text-danger">Silakan lakukan pembayaran untuk menyelesaikan pesanan Anda.</p>
+                                        <button class="btna" type="submit" id="pay-button">Bayar Sekarang</button>
                                     @endif
 
                                 </div>
@@ -256,7 +257,7 @@
                                 
                 @if ($order->status=='ordered')
                     <div class="wg-box mt-5 text-right">                    
-                    <form action="{{route('pages.order.cancel')}}" method="POST">
+                    <form action="{{route('pages.order.cancel')}}" method="POST" class="cancel-order">
                         @csrf
                         @method("PUT")
                         <input type="hidden" name="order_id" value="{{$order->id}}" />
@@ -322,25 +323,30 @@
     };
   </script>
 
+    
 <script>
-        $(function(){
-            $(".cancel-order").on('click',function(e){
-                e.preventDefault();
-                var selectedForm = $(this).closest('form');
-                swal({
-                    title: "Are you sure?",
-                    text: "You want to cancel this order?",
-                    type: "warning",
-                    buttons: ["No!", "Yes!"],
-                    confirmButtonColor: '#dc3545'
-                }).then(function (willCancel) {
-                    if (willCancel) {
-                        selectedForm.submit();  
-                    }
-                });                             
+    $(function(){
+        $(".cancel-order").on('click', function(e){
+            e.preventDefault();
+            var selectedForm = $(this).closest('form');
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You want to cancel this order?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#dc3545',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Yes, cancel it!',
+                cancelButtonText: 'No'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    selectedForm.submit();
+                }
             });
         });
-    </script>
+    });
+</script>
 
 <script>
 document.getElementById('check-payment-btn').addEventListener('click', function () {

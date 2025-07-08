@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\dashboard;
 use Illuminate\Http\Request;
+use App\Models\Products;
 
 class DashboardController extends Controller
 {
@@ -12,6 +13,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
+
         return view('dashboard.dashboard', [
             "title" => "Dashboard"
        ]);

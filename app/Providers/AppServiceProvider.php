@@ -5,6 +5,8 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\View;
+use App\Models\Products;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,6 +29,11 @@ class AppServiceProvider extends ServiceProvider
 
         Gate::define('owner', function(User $user){
             return $user->user_type === 'owner';
+        });
+
+        View::composer('*', function ($view) {
+            $lowStockProducts = Products::where('quantity', '<', 5)->get();
+            $view->with('lowStockProducts', $lowStockProducts);
         });
     }
 }

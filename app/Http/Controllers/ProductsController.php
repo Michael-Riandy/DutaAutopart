@@ -228,7 +228,6 @@ class ProductsController extends Controller
     public function destroy($id)
     {
         $products = products::find($id);
-        product_prices::where('product_id', $products->id)->delete();
         $products->delete();
         return redirect()->route('admin.products')->with('status','Record has been deleted successfully !');
     }

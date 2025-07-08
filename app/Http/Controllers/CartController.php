@@ -160,6 +160,27 @@ class CartController extends Controller
             $transaction->status = "pending";
             $transaction->snap_token="";
             $transaction->save();
+
+            $params = [
+                'transaction_details' => [
+                    'order_id' => $order_id,
+                    'gross_amount' => $order->total,
+                ],
+                'item_details' => $items,
+                'customer_details' => [
+                    'first_name' => $order->name,
+                    'email' => $order->email,
+                    'phone' => $order->phone,
+                ],
+                'callbacks' => [
+                    'finish' => route('midtrans.finish') // tetap pakai ini untuk keamanan
+                ],
+                'finish_redirect_url' => route('midtrans.return.back')
+            ];
+
+            $snapTransaction = Snap::getSnapToken($params);
+            $transaction->snap_token = $snapTransaction;
+            $transaction->save();
         }else if ($request->mode == "invoice") {
             $transaction = new Transaction();
             $transaction->user_id = $user_id;
@@ -177,26 +198,6 @@ class CartController extends Controller
             $transaction->snap_token="";
              $transaction->save();
         }
-        $params = [
-            'transaction_details' => [
-                'order_id' => $order_id,
-                'gross_amount' => $order->total,
-            ],
-            'item_details' => $items,
-            'customer_details' => [
-                'first_name' => $order->name,
-                'email' => $order->email,
-                'phone' => $order->phone,
-            ],
-            'callbacks' => [
-                'finish' => route('midtrans.finish') // tetap pakai ini untuk keamanan
-            ],
-            'finish_redirect_url' => route('midtrans.return.back')
-        ];
-
-        $snapTransaction = Snap::getSnapToken($params);
-        $transaction->snap_token = $snapTransaction;
-        $transaction->save();
 
         Cart::instance('cart')->destroy();
         Session()->forget('checkout');
