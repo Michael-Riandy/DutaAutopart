@@ -110,12 +110,20 @@
           </div>
 
           <div class="shop-acs d-flex align-items-center justify-content-between justify-content-md-end flex-grow-1">
-            <select class="shop-acs__select form-select w-auto border-0 py-0 order-1 order-md-0" aria-label="Page Size" id="pagesize" name="pagesize" style="margin-right:20px;">
+            <form method="GET" id="pageSizeForm" class="me-2">
+            <select name="size" id="pagesize" class="shop-acs__select form-select w-auto border-0 py-0" onchange="this.form.submit()">
               <option value="12" {{ $size==12 ? 'selected':'' }}>Show</option>
               <option value="24" {{ $size==24 ? 'selected':'' }}>24</option>
               <option value="48" {{ $size==48 ? 'selected':'' }}>48</option>
               <option value="102" {{ $size==102 ? 'selected':'' }}>102</option>
             </select>
+
+            {{-- Simpan juga filter lain agar tetap ada saat submit --}}
+            <input type="hidden" name="brands" value="{{ $f_brands }}">
+            <input type="hidden" name="categories" value="{{ $f_categories }}">
+            <input type="hidden" name="order" value="{{ $order }}">
+          </form>
+
 
               <select name="order" id="order" class="shop-acs__select form-select w-auto border-0 py-0 order-1 order-md-0" onchange="this.form.submit()">
                   <option value="-1" {{ $order == -1 ? 'selected' : '' }}>Default</option>
@@ -125,14 +133,6 @@
                   <option value="4" {{ $order == 4 ? 'selected' : '' }}>Price: High to Low</option>
               </select>
           
-            {{-- <select class="shop-acs__select form-select w-auto border-0 py-0 order-1 order-md-0" aria-label="Sort Items" name="orderby" id="orderby">
-              <option value="-1" {{ $order == -1 ? 'selected':'' }}>Default</option>
-              <option value="1" {{ $order == 1 ? 'selected':'' }}>Date, New To Old</option>
-              <option value="2" {{ $order == 2 ? 'selected':'' }}>Date, Old To New</option>
-              <option value="3" {{ $order == 3 ? 'selected':'' }}>Price, Low To High</option>
-              <option value="4" {{ $order == 4 ? 'selected':'' }}>Price, High To Low</option>
-            </select> --}}
-
             <div class="shop-asc__seprator mx-3 bg-light d-none d-md-block order-md-0"></div>
 
             <div class="col-size align-items-center order-1 d-none d-lg-flex">
@@ -173,13 +173,6 @@
                       </div>
                       @endif
                     </div>
-                    {{-- <div class="swiper-slide">
-                        @foreach (explode(",",$product->images) as $gimg)
-                            <a href="{{route('shop.product.details',["product_slug"=>$product->slug])}}">
-                                <img loading="lazy" src="{{asset('uploads/products')}}/{{trim($gimg)}}" width="330" height="400" alt="Cropped Faux leather Jacket" class="pc__img">
-                            </a>
-                        @endforeach                                        
-                    </div> --}}
                   </div>
                 </div>
                 @if(Cart::instance('cart')->content()->where('id',$product->id)->count()>0)
@@ -209,35 +202,8 @@
                 <p class="pc__category">{{ $product->category->name }}</p>
                 <h6 class="pc__title"><a href="{{ route('pages.shop.product.details',['product_slug'=>$product->slug]) }}">{{ $product->name }}</a></h6>
                 <div class="product-card__price d-flex">
-                  <span class="money price">{{ $product->price }}</span>
+                  <span class="money price" style="font-weight: bold">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
                 </div>
-                {{-- <div class="product-card__review d-flex align-items-center">
-                  <div class="reviews-group d-flex">
-                    <svg class="review-star" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
-                      <use href="#icon_star" />
-                    </svg>
-                    <svg class="review-star" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
-                      <use href="#icon_star" />
-                    </svg>
-                    <svg class="review-star" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
-                      <use href="#icon_star" />
-                    </svg>
-                    <svg class="review-star" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
-                      <use href="#icon_star" />
-                    </svg>
-                    <svg class="review-star" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
-                      <use href="#icon_star" />
-                    </svg>
-                  </div>
-                  <span class="reviews-note text-lowercase text-secondary ms-1">8k+ reviews</span>
-                </div> --}}
-
-                {{-- <button class="pc__btn-wl position-absolute top-0 end-0 bg-transparent border-0 js-add-wishlist"
-                  title="Add To Wishlist">
-                  <svg width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <use href="#icon_heart" />
-                  </svg>
-                </button> --}}
               </div>
             </div>
           </div>
@@ -252,7 +218,6 @@
         </div>
     </section>
 </main>
-
 <form id="frmfilter" method="GET" action="{{ route('pages.shop.index') }}">
   <input type="hidden" name="page" value="{{ $products->currentPage() }}">
   <input type="hidden" name="size" value="{{ $size }}" >
@@ -261,15 +226,16 @@
   <input type="hidden" name="categories" id="hdnCategories">
 </form>
 
+
 @endsection
 
 @push('scripts')
+document.getElementById('pagesize').addEventListener('change', function () {
+  document.getElementById('frmfilter').submit();
+});
+
     <script>
       $(function(){
-        $("#pagesize").on("change", function(){
-          $("#size").val($("#pagesize option:selected").val());
-          $("#frmfilter").submit();
-        });
 
         $("#orderby").on("change", function(){
           $("#order").val($("#orderby option:selected").val());

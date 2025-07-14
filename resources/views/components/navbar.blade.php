@@ -160,11 +160,11 @@
             </div>
 
             <div class="search-popup js-hidden-content">
-              <form action="{{ route('products.liveSearch') }}" method="GET" class="form-search search-field container">
+              <form action="#" method="GET" class="form-search search-field container" autocomplete="off">
                 <p class="text-uppercase text-secondary fw-medium mb-4">What are you looking for?</p>
                 <div class="position-relative">
-                  <input type="text" id="product-search" class="search-field__input search-popup__input w-100 fw-medium" placeholder="Cari produk...">
-                  <div id="search-results" class="dropdown-menu show w-100" style="display: none; max-height: 300px; overflow-y: auto;"></div>
+                  <input type="text" id="searchInput" name="q" class="search-field__input search-popup__input w-100 fw-medium" placeholder="Cari produk...">
+                  <div id="searchResults" class="dropdown-menu show w-100" style="display: none; max-height: 300px; overflow-y: auto;"></div>
                   <button class="btn-icon btn-close-lg search-popup__reset" type="reset"></button>
                 </div>
               </form>
@@ -208,12 +208,60 @@
   
   
   @section('scripts')
-  <script>
-    console.log("LiveSearch URL = {{ route('products.liveSearch') }}");
-    </script>
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function () {
+    let timer;
+
+    $('#searchInput').on('input', function () {
+        clearTimeout(timer);
+        const query = $(this).val().trim();
+
+        if (query.length < 1) {
+            $('#searchResults').html('');
+            return;
+        }
+
+        timer = setTimeout(() => {
+            $.ajax({
+                url: '{{ route("search.ajax") }}',
+                type: 'GET',
+                data: { q: query },
+                success: function (data) {
+                    $('#searchResults').html(data).show();
+                },
+                error: function () {
+                    $('#searchResults').hide().html('');
+                }
+            });
+        }, 300); // debounce 300ms
+    });
+
+    $(document).on('click', '.search-item', function () {
+        $('#searchInput').val($(this).text());
+        $('#searchResults').html('');
+    });
+});
+</script>
   <script>
+    $(document).ready(function () {
+        // Hide search results when clicking outside
+        $(document).on('click', function (e) {
+            if (!$(e.target).closest('.search-field').length) {
+                $('#searchResults').hide();
+            }
+        });
+
+        // Show search results when clicking the search icon
+        $('.search-field__actor').on('click', function (e) {
+            e.preventDefault();
+            $('#searchResults').toggle();
+        });
+    });
+  </script>
+    
+  {{-- <script>
     $(document).ready(function () {
       $('#product-search').on('keyup', function () {
         let query = $(this).val();
@@ -253,5 +301,5 @@
                       }
                     });
                   });
-            </script>
+            </script> --}}
   @endsection

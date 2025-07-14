@@ -102,6 +102,10 @@ class CartController extends Controller
             $addresses->save();
         }
         $this->setAmountForCheckout();
+        if(!Session()->has('checkout'))
+        {
+            return redirect()->route('pages.shop.index')->with('error', 'Keranjang belanja kosong. Silakan tambahkan produk sebelum checkout.');
+        }
         $order = new orders();
         $order->user_id = $user_id;
         $order->subtotal = Session()->get('checkout')['subtotal'];
@@ -456,6 +460,9 @@ class CartController extends Controller
         //     return view('pages.order-confirmation',compact('order'));
         // }
         $orderId = $request->input('order_id');
+        if (!$orderId) {
+            return redirect()->route('pages.index')->with('alert', 'Order ID tidak ditemukan.');
+        }
 
         try {
             // 3. Ambil status transaksi dari Midtrans API

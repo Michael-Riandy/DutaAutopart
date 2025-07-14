@@ -15,7 +15,7 @@ class AccountController extends Controller
 
     public function account_address()
     {
-        $addresses = user_addresses::where('user_id', Auth::user()->id)->where('isdefault',1)->first();
+        $addresses = user_addresses::where('user_id', Auth::user()->id)->first();
         return view('pages.account-address', compact('addresses'));
     }
 

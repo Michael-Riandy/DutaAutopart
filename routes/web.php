@@ -63,7 +63,9 @@ Route::post('/midtrans/update-status', [CartController::class, 'updateStatus']);
 Route::post('/orders/{order}/ajax-check-payment', [CartController::class, 'ajaxCheckPaymentStatus'])->name('orders.ajaxCheckPayment');
 
 
-Route::get('/live-search', [EcommerceController::class, 'liveSearch'])->name('products.liveSearch');
+// Route::get('/live-search', [EcommerceController::class, 'liveSearch'])->name('products.liveSearch');
+Route::get('/search/ajax', [EcommerceController::class, 'ajaxSearch'])->name('search.ajax');
+
 
 Route::middleware(['auth'])->group(function(){
     Route::get('/account-dashboard',[AccountController::class,'index'])->name('pages.account');
