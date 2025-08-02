@@ -6,7 +6,7 @@ use App\Models\order_details;
 use App\Models\orders;
 use App\Models\Transaction;
 use App\Models\products;
-use App\Models\user_addresses;
+use App\Models\UserAddress;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +18,8 @@ use Midtrans\Notification;
 use Midtrans\Transaction as MidtransTransaction;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Str;
+
 
 class CartController extends Controller
 {
@@ -33,9 +35,7 @@ class CartController extends Controller
     public function add_to_cart(Request $request)
     {
         Cart::instance('cart')->add($request->id,$request->name,$request->quantity,$request->price)->associate(products::class);  
-              
-        // session()->flash('success', 'Product is Added to Cart Successfully !');        
-        // return response()->json(['status'=>200,'message'=>'Success ! Item Successfully added to your cart.']);
+        
         return redirect()->back();
     } 
 
@@ -76,14 +76,14 @@ class CartController extends Controller
             return redirect()->route('login');
         }
 
-        $addresses = user_addresses::where('user_id', Auth::user()->id)->first();
+        $addresses = UserAddress::where('user_id', Auth::user()->id)->first();
         return view('pages.checkout', compact('addresses','transaction'));
     }
 
     public function place_an_order(Request $request)
     {
         $user_id = Auth::user()->id;
-        $addresses = user_addresses::where('user_id',$user_id)->first();
+        $addresses = UserAddress::where('user_id',$user_id)->first();
 
         if (!$addresses) {
             $request->validate([
@@ -93,7 +93,7 @@ class CartController extends Controller
                 'city' => 'required',
             ]);
 
-            $addresses = new user_addresses();
+            $addresses = new UserAddress();
             $addresses->name = $request->name;
             $addresses->phone = $request->phone;
             $addresses->address = $request->address;

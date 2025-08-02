@@ -126,7 +126,7 @@
                                     <h5>Shipping Address</h5>
                                     <div class="my-account__address-item col-md-6">
                                         <div class="my-account__address-item__detail">
-                                            <p>{{ $order->name }}</p>
+                                            <p>{{ optional($order->user)->name }}</p>
                                             <p>{{ $order->address }}</p>
                                             <p>{{ $order->city }}</p>
                                             <br>

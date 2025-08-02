@@ -81,10 +81,12 @@ class UserController extends Controller
             $transaction->status = $stat; 
             $transaction->save();
 
-            return redirect()->back()->with('success', 'Status pembayaran diperbarui: ' . $transaction->status);
+            return redirect()->route('pages.order.detail', $order->id)
+                 ->with('success', 'Status pembayaran diperbarui: ' . $transaction->status);
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Gagal mengambil status pembayaran: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Gagal memeriksa status pembayaran: ' . $e->getMessage());
         }
+
     }
 
     // public function order_cancel(Request $request)

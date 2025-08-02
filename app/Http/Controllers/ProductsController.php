@@ -16,25 +16,6 @@ use Intervention\Image\Facades\Image;
 
 class ProductsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    // public function GenerateProductThumbnailImage($image, $imageName)
-    // {
-    //     $destinationPathThumbnail = public_path('uploads/products/thumbnails');
-    //     $destinationPath = public_path('uploads/products');
-    //     $img = Image::read($image->path());
-
-    //     $img->cover(540,689,"top");
-    //     $img->resize(540,689,function($constraint){
-    //         $constraint->aspectRatio();
-    //     })->save($destinationPath.'/'.$imageName);
-
-    //     $img->resize(104,104,function($constraint){
-    //         $constraint->aspectRatio();
-    //     })->save($destinationPathThumbnail.'/'.$imageName);
-
-    // }
     public function index()
     {
         $products = Products::with(['brand', 'supplier', 'category'])->orderBy('id', 'asc')->paginate(10);
@@ -58,10 +39,6 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
-        // Debug untuk memastikan data yang dikirimkan
-        // dd($request->all());
-
-        // Validasi input dari form
         $request->validate([
             'name' => 'required',
             'slug' => 'required|unique:products,slug',
@@ -70,11 +47,9 @@ class ProductsController extends Controller
             'supplier_id' => 'required',
             'description' => 'required',
             'quantity' => 'required|numeric|min:0',
-            'image' => 'required|mimes:png,jpg,jpeg|max:2048', // Validasi gambar
+            'image' => 'required|mimes:png,jpg,jpeg|max:2048',
             'price' => 'required',
         ]);
-
-        // Membuat objek produk baru
         $product = new products();
         $product->name = $request->name;
         $product->slug = Str::slug($request->name);
@@ -84,68 +59,17 @@ class ProductsController extends Controller
         $product->category_id = $request->category_id;
         $product->brand_id = $request->brand_id;
         $product->supplier_id = $request->supplier_id;
-
-        // Memeriksa apakah ada gambar yang diupload
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
             if(File::exists(public_path('uploads/products').'/'.$product->image))
-            {
-                File::delete(public_path('uploads/products').'/'.$product->image);
-            }
-            if(File::exists(public_path('uploads/products/thumbnails').'/'.$product->image))
-            {
-                File::delete(public_path('uploads/products/thumbnails').'/'.$product->image);
-            }
-
+            {File::delete(public_path('uploads/products').'/'.$product->image);}
             $image = $request->file('image');
             $imageName = time().'.'.$image->extension();
-            $image->move(public_path('uploads/products'), $imageName);
-            // $this->GenerateProductThumbnailImage($image,$imageName);            
+            $image->move(public_path('uploads/products'), $imageName);        
             $product->image = $imageName;
         }
-        // $gallery_arr = array();
-        // $gallery_images = "";
-        // $counter = 1;
-        // if($request->hasFile('images'))
-        // {
-        //     $allowedfileExtension=['jpg','png','jpeg'];
-        //     $files = $request->file('images');
-        //     foreach($files as $file){                
-        //         $gextension = $file->getClientOriginalExtension();                                
-        //         $check=in_array($gextension,$allowedfileExtension);            
-        //         if($check)
-        //         {
-        //             $gfilename = time() . "-" . $counter . "." . $gextension;   
-        //             $this->GenerateProductThumbnailImage($file,$gfilename);                
-        //             array_push($gallery_arr,$gfilename);
-        //             $counter = $counter + 1;
-        //         }
-        //     }
-        //     $gallery_images = implode(',', $gallery_arr);
-        // }
-        // $product->images = $gallery_images;
         $product->category_id = $request->category_id;
         $product->brand_id = $request->brand_id;
-
-        // Menyimpan produk ke dalam database
         $product->save();
-
-        // // Menyimpan harga ke dalam product_prices dan harga pertama ke dalam produk
-        // foreach ($request->prices as $product_prices) {
-        //     // Simpan semua harga ke tabel product_prices
-        //     product_prices::create([
-        //         'product_id' => $product->id,
-        //         'min_quantity' => $product_prices['min_qty'],
-        //         'price' => $product_prices['price'],
-        //     ]);
-
-        //     // Jika min_qty == 1, simpan harga pertama ke dalam produk
-        //     if ($product_prices['min_qty'] == 1) {
-        //         $product->price = $product_prices['price']; // Simpan harga ke produk
-        //         $product->save(); // Update produk dengan harga tersebut
-        //     }
-        // }
-
-        // Mengarahkan kembali ke halaman produk dengan pesan status
         return redirect()->route('admin.products')->with('status', 'Record has been added successfully!');
     }
 

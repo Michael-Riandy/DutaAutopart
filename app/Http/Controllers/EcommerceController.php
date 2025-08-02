@@ -83,16 +83,12 @@ class EcommerceController extends Controller
     {
         $query = $this->normalizeString($request->q);
         $produkList = products::all();
-
         $hasil = [];
-
         foreach ($produkList as $produk) {
             $nama = $this->normalizeString($produk->name);
             $deskripsi = $this->normalizeString($produk->description);
-
             $levNama = levenshtein($query, substr($nama, 0, strlen($query)));
             $levDeskripsi = levenshtein($query, substr($deskripsi, 0, strlen($query)));
-
             if (str_contains($nama, $query)) {
                 $hasil[] = ['produk' => $produk, 'skor' => 0, 'prioritas' => 1];
             } elseif (str_contains($deskripsi, $query)) {
@@ -103,14 +99,10 @@ class EcommerceController extends Controller
                 $hasil[] = ['produk' => $produk, 'skor' => $levDeskripsi, 'prioritas' => 2];
             }
         }
-
-        // Urutkan: prioritas nama dulu, lalu skor terkecil
         usort($hasil, fn($a, $b) =>
             $a['prioritas'] <=> $b['prioritas'] ?: $a['skor'] <=> $b['skor']
         );
-
         $topHasil = array_slice($hasil, 0, 5);
-
         if (empty($topHasil)) {
             return '<ul class="alert alert-warning list-group list-group-flush">Tidak ada hasil ditemukan</ul>';
         }
@@ -118,7 +110,6 @@ class EcommerceController extends Controller
         foreach ($topHasil as $item) {
             $produk = $item['produk'];
             $url = route('pages.shop.product.details', ['product_slug' => $produk->slug]);
-
             $output .= '<a href="' . $url . '" class="list-group-item search-item">' .
                        e($produk->name) .
                     '</a>';

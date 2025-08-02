@@ -47,7 +47,8 @@ Route::get('/', [HomeController::class, 'index'])->name('pages.index');
 Route::get('/shop', [EcommerceController::class, 'index'])->name('pages.shop.index');
 Route::get('/shop/{product_slug}',[EcommerceController::class,'details'])->name("pages.shop.product.details");
 
-Route::get('/checkout',[CartController::class,'checkout'])->name('pages.checkout');
+
+Route::get('/checkout',[CartController::class,'checkout'])->middleware('auth')->name('pages.checkout');
 Route::post('/place-an-order',[CartController::class, 'place_an_order'])->name('pages.cart.place.an.order');
 Route::get('/order-confirmation',[CartController::class,'order_confirmation'])->name('pages.order-confirmation');
 
@@ -68,6 +69,7 @@ Route::get('/search/ajax', [EcommerceController::class, 'ajaxSearch'])->name('se
 
 
 Route::middleware(['auth'])->group(function(){
+    
     Route::get('/account-dashboard',[AccountController::class,'index'])->name('pages.account');
     Route::get('/account-orders',[UserController::class, 'orders'])->name('pages.orders');
     Route::get('/account-orders/{order_id}/details',[UserController::class, 'order_details'])->name('pages.order.details');
@@ -79,10 +81,10 @@ Route::middleware(['auth'])->group(function(){
 
     Route::get('/cart',[CartController::class,'index'])->name('pages.cart.index');
     Route::post('/cart/store', [CartController::class, 'add_to_cart'])->name('pages.cart.store');
-    Route::put('/cart/increase-quantity/{rowId}', [CartController::class, 'increase'])->name('pages.cart.qty.increase');
-    Route::put('/cart/decrease-quantity/{rowId}', [CartController::class, 'decrease'])->name('pages.cart.qty.decrease');
-    Route::delete('/cart/remove/{rowId}',[CartController::class,'remove'])->name('pages.cart.remove');
-    Route::delete('/cart/clear',[CartController::class,'empty_cart'])->name('pages.cart.empty');
+    Route::get('/cart/increase-quantity/{rowId}', [CartController::class, 'increase'])->name('pages.cart.qty.increase');
+    Route::get('/cart/decrease-quantity/{rowId}', [CartController::class, 'decrease'])->name('pages.cart.qty.decrease');
+    Route::get('/cart/remove/{rowId}',[CartController::class,'remove'])->name('pages.cart.remove');
+    Route::get('/cart/clear',[CartController::class,'empty_cart'])->name('pages.cart.empty');
 
     Route::get('/contact-us',[HomeController::class,'contact'])->name('pages.contact');
     Route::post('/contact/store', [HomeController::class, 'contact_store'])->name('pages.contact.store');
@@ -143,3 +145,9 @@ Route::middleware([AuthAdmin::class])->group(function(){
 
     Route::get('/admin/search',[AdminController::class,'search'])->name('admin.search');
 });
+
+if (app()->environment('testing')) {
+    Route::get('/admin/slides',[AdminController::class, 'slides'])->name('admin.slides');
+    Route::get('/admin/slide/add',[AdminController::class, 'slide_add'])->name('admin.slide.add');
+    Route::post('/admin/slide/store',[AdminController::class,'slide_store'])->name('admin.slide.store');
+}

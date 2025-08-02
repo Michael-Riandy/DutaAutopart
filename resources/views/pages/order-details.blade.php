@@ -248,7 +248,6 @@
                                         </tbody>
                                     </table>
                                     @if ($transaction->status !== 'settlement' && $transaction->mode == 'transfer')
-                                        <p class="text-danger">Silakan lakukan pembayaran untuk menyelesaikan pesanan Anda.</p>
                                         <button class="btna" type="submit" id="pay-button">Bayar Sekarang</button>
                                     @endif
 

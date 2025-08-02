@@ -34,32 +34,5 @@ class UserAddressesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(user_addresses $user_addresses)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(user_addresses $user_addresses)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, user_addresses $user_addresses)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(user_addresses $user_addresses)
-    {
-        //
-    }
+    
 }

@@ -17,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
     {
         //
     }
+    
 
     /**
      * Bootstrap any application services.
@@ -35,5 +36,7 @@ class AppServiceProvider extends ServiceProvider
             $lowStockProducts = Products::where('quantity', '<', 5)->get();
             $view->with('lowStockProducts', $lowStockProducts);
         });
+
+        
     }
 }

@@ -118,12 +118,6 @@ class AdminController extends Controller
         $slide->link = $request->link;
         $slide->status = $request->status;
 
-        // $image = $request->file('image');
-        // $file_extention = $request->file('image')->extension();
-        // $file_name = Carbon::now()->timestamp.'.'.$file_extention;
-        // $this->GenerateSlideThumbnailsImage($image,$file_name);
-        // $slide->image = $file_name;
-
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
             if(File::exists(public_path('uploads/slides').'/'.$slide->image))
             {
@@ -132,24 +126,12 @@ class AdminController extends Controller
 
             $image = $request->file('image');
             $imageName = time().'.'.$image->extension();
-            $image->move(public_path('uploads/slides'), $imageName);
-            // $this->GenerateProductThumbnailImage($image,$imageName);            
+            $image->move(public_path('uploads/slides'), $imageName);     
             $slide->image = $imageName;
         }
         $slide->save();
         return redirect()->route('admin.slides')->with("status","Slide berhasil ditambahkan!");
     }
-
-    // public function GenerateSlideThumbnailsImage($image, $imageName)
-    // {
-    //     $destinationPath = public_path('uploads/slides');
-    //     $img = Image::read($image->path());
-    //     $img->cover(400,690,"top");
-    //     $img->resize(400,690,function($constraint){
-    //         $constraint->aspectRatio();
-    //     })->save($destinationPath.'/'.$imageName);
-    // }
-
     public function slide_edit($id)
     {
         $slide = Slide::find($id);
@@ -182,7 +164,7 @@ class AdminController extends Controller
             $image = $request->file('image');
             $imageName = time().'.'.$image->extension();
             $image->move(public_path('uploads/slides'), $imageName);
-            // $this->GenerateProductThumbnailImage($image,$imageName);            
+                     
             $slide->image = $imageName;
         }
         $slide->save();
