@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 07, 2025 at 07:19 PM
+-- Generation Time: Aug 02, 2025 at 04:41 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -305,7 +305,12 @@ INSERT INTO `orders` (`id`, `user_id`, `subtotal`, `total`, `name`, `phone`, `ad
 (16, 4, '1,100,000.00', '1,100,000.00', 'Testing', '0812345678900', 'Jl Adisucipto', 'Pontianak', 'delivered', '2025-07-07', NULL, '2025-07-07 08:48:21', '2025-07-07 08:52:11'),
 (17, 4, '325,000.00', '325,000.00', 'Testing', '0812345678900', 'Jl Adisucipto', 'Pontianak', 'ordered', NULL, NULL, '2025-07-07 08:50:43', '2025-07-07 08:50:43'),
 (18, 4, '3,320,000.00', '3,320,000.00', 'Testing', '0812345678900', 'Jl Adisucipto', 'Pontianak', 'ordered', NULL, NULL, '2025-07-07 09:26:58', '2025-07-07 09:26:58'),
-(19, 4, '450,000.00', '450,000.00', 'Testing', '0812345678900', 'Jl Adisucipto', 'Pontianak', 'delivered', '2025-07-07', NULL, '2025-07-07 09:28:10', '2025-07-07 09:30:03');
+(19, 4, '450,000.00', '450,000.00', 'Testing', '0812345678900', 'Jl Adisucipto', 'Pontianak', 'delivered', '2025-07-07', NULL, '2025-07-07 09:28:10', '2025-07-07 09:30:03'),
+(20, 2, '450,000.00', '450,000.00', 'Rejeki Motor', '081234567890', 'Jl Antasari', 'Pontianak', 'ordered', NULL, NULL, '2025-07-24 05:50:58', '2025-07-24 05:50:58'),
+(21, 2, '450,000.00', '450,000.00', 'Rejeki Motor', '081234567890', 'Jl Antasari', 'Pontianak', 'ordered', NULL, NULL, '2025-07-24 05:51:40', '2025-07-24 05:51:40'),
+(22, 2, '775,000.00', '775,000.00', 'Rejeki Motor', '081234567890', 'Jl Antasari', 'Pontianak', 'ordered', NULL, NULL, '2025-07-24 05:53:18', '2025-07-24 05:53:18'),
+(23, 2, '775,000.00', '775,000.00', 'Rejeki Motor', '081234567890', 'Jl Antasari', 'Pontianak', 'ordered', NULL, NULL, '2025-07-24 05:53:28', '2025-07-24 05:53:28'),
+(24, 2, '80,000.00', '80,000.00', 'Rejeki Motor', '081234567890', 'Jl Antasari', 'Pontianak', 'canceled', NULL, '2025-07-24', '2025-07-24 05:54:07', '2025-07-24 05:55:36');
 
 -- --------------------------------------------------------
 
@@ -351,7 +356,14 @@ INSERT INTO `order_details` (`id`, `order_id`, `product_id`, `price`, `quantity`
 (21, 16, 11, 550000, 2, '2025-07-07 08:48:21', '2025-07-07 08:48:21'),
 (22, 17, 39, 325000, 1, '2025-07-07 08:50:43', '2025-07-07 08:50:43'),
 (23, 18, 34, 830000, 4, '2025-07-07 09:26:58', '2025-07-07 09:26:58'),
-(24, 19, 38, 450000, 1, '2025-07-07 09:28:10', '2025-07-07 09:28:10');
+(24, 19, 38, 450000, 1, '2025-07-07 09:28:10', '2025-07-07 09:28:10'),
+(25, 20, 38, 450000, 1, '2025-07-24 05:50:58', '2025-07-24 05:50:58'),
+(26, 21, 38, 450000, 1, '2025-07-24 05:51:40', '2025-07-24 05:51:40'),
+(27, 22, 38, 450000, 1, '2025-07-24 05:53:18', '2025-07-24 05:53:18'),
+(28, 22, 39, 325000, 1, '2025-07-24 05:53:18', '2025-07-24 05:53:18'),
+(29, 23, 38, 450000, 1, '2025-07-24 05:53:28', '2025-07-24 05:53:28'),
+(30, 23, 39, 325000, 1, '2025-07-24 05:53:28', '2025-07-24 05:53:28'),
+(31, 24, 33, 80000, 1, '2025-07-24 05:54:07', '2025-07-24 05:54:07');
 
 -- --------------------------------------------------------
 
@@ -452,13 +464,13 @@ INSERT INTO `products` (`id`, `name`, `slug`, `description`, `price`, `quantity`
 (29, 'Kaki Spion Avanza 2019 LH', 'kaki-spion-avanza-2019-lh', 'Kaki spion Avanza 2019 adalah komponen dudukan atau penyangga spion samping yang menghubungkan kaca spion dengan bodi pintu depan. Pada Toyota Avanza 2019 (Grand New Avanza facelift), kaki spion menyatu dengan housing spion dan biasanya memiliki sistem elektrik tergantung pada tipe mobil (E, G, atau Veloz).', 90000, 20, '1751895044.jpg', 12, 2, 1, '2025-07-07 06:30:44', '2025-07-07 06:30:44'),
 (31, 'Kaki Spion Innova 2005-2014 RH', 'kaki-spion-innova-2005-2014-rh', 'Kaki spion Innova adalah dudukan atau penyangga yang menghubungkan kaca spion dengan bodi pintu kendaraan. Komponen ini umumnya terbuat dari bahan plastik ABS yang kuat atau logam berlapis, tergantung tipe dan tahun produksi mobil. Fungsinya tidak hanya menopang spion agar tetap kokoh, tetapi juga meredam getaran saat berkendara sehingga visibilitas tetap jelas. Pada beberapa tipe, kaki spion juga dilengkapi mekanisme elektrik seperti motor lipat (retractable) atau pengatur kaca otomatis. Untuk Toyota Innova, kaki spion tersedia dalam berbagai model sesuai generasi, seperti Innova 2004–2015 dan Innova Reborn 2016 ke atas.', 90000, 20, '1751895150.jpg', 12, 2, 1, '2025-07-07 06:32:30', '2025-07-07 06:32:30'),
 (32, 'Stoplamp APV Arena RH', 'stoplamp-apv-arena-rh', 'Stoplamp Suzuki APV Arena adalah lampu belakang utama yang berfungsi sebagai penanda pengereman, lampu malam, sein, dan lampu mundur pada mobil Suzuki APV Arena (tahun produksi 2007 hingga sekarang). Komponen ini dirancang untuk memberikan visibilitas maksimal kepada pengendara di belakang, sehingga meningkatkan keselamatan berkendara, terutama saat malam atau cuaca buruk.', 485000, 1, '1751895207.jpg', 4, 6, 2, '2025-07-07 06:33:27', '2025-07-07 07:29:20'),
-(33, 'Cover Foglamp Innova DX 2013', 'cover-foglamp-innova-dx-2013', 'Cover foglamp Innova 2013 adalah penutup atau frame plastik yang mengelilingi lampu kabut (foglamp) pada bagian bumper depan Toyota Innova generasi pertama facelift (2012–2015). Komponen ini berfungsi sebagai pelindung sekaligus pemanis estetika bumper, serta membantu mengarahkan cahaya lampu kabut agar tidak menyilaukan.', 80000, 20, '1751895400.jpg', 28, 2, 1, '2025-07-07 06:36:40', '2025-07-07 06:36:40'),
+(33, 'Cover Foglamp Innova DX 2013', 'cover-foglamp-innova-dx-2013', 'Cover foglamp Innova 2013 adalah penutup atau frame plastik yang mengelilingi lampu kabut (foglamp) pada bagian bumper depan Toyota Innova generasi pertama facelift (2012–2015). Komponen ini berfungsi sebagai pelindung sekaligus pemanis estetika bumper, serta membantu mengarahkan cahaya lampu kabut agar tidak menyilaukan.', 80000, 20, '1751895400.jpg', 28, 2, 1, '2025-07-07 06:36:40', '2025-07-24 05:55:36'),
 (34, 'Stoplamp Triton 2019 LED Kotak RH', 'stoplamp-triton-2019-led-kotak-rh', 'Stoplamp Triton 2019 LED kotak adalah lampu belakang dengan desain modern berbentuk kotak yang digunakan pada Mitsubishi Triton generasi kelima facelift (tahun 2019 ke atas). Varian ini umumnya tersedia pada Triton Exceed, Ultimate, atau varian yang sudah menggunakan lampu full LED sebagai standar.', 830000, 36, '1751895485.jpg', 4, 1, 1, '2025-07-07 06:38:05', '2025-07-07 09:26:58'),
 (35, 'Grill Radiator Innova Old 2005 Gading', 'grill-radiator-innova-old-2005-gading', 'Grill radiator Innova 2005 warna gading merupakan komponen eksterior depan yang berfungsi sebagai pelindung radiator sekaligus penambah estetika pada Toyota Innova generasi pertama (2004–2008). Warna gading—yang menyerupai krem terang atau putih tulang—biasanya digunakan untuk menyesuaikan dengan warna bodi mobil tertentu, terutama untuk varian Innova dengan cat serupa atau untuk modifikasi.', 500000, 5, '1751895592.jpg', 7, 9, 6, '2025-07-07 06:39:52', '2025-07-07 06:39:52'),
 (36, 'Stoplamp Avanza 2019 RH', 'stoplamp-avanza-2019-rh', 'Stoplamp Avanza 2019 merupakan lampu belakang untuk Toyota Grand New Avanza facelift yang dirilis tahun 2019. Komponen ini memiliki desain vertikal dengan nuansa modern, mengikuti perubahan pada desain eksterior facelift generasi kedua.', 475000, 8, '1751895686.jpg', 4, 6, 2, '2025-07-07 06:41:26', '2025-07-07 07:17:33'),
 (37, 'Grill Radiator Hilux 2005', 'grill-radiator-hilux-2005', 'Grill radiator Hilux 2005 adalah komponen depan yang terletak di antara kedua lampu utama dan berfungsi melindungi radiator sekaligus menambah tampilan estetika Toyota Hilux generasi awal Vigo / Kun26 yang diproduksi mulai tahun 2004–2008.', 500000, 0, '1751895818.jpg', 7, 5, 6, '2025-07-07 06:43:38', '2025-07-07 07:27:39'),
-(38, 'Stoplamp Hilux Revo 2015 RH', 'stoplamp-hilux-revo-2015-rh', 'Stoplamp Hilux Revo adalah lampu belakang yang digunakan pada Toyota Hilux generasi ke-8, dikenal sebagai Hilux Revo, yang diluncurkan mulai tahun 2015 hingga sekarang. Komponen ini berfungsi sebagai lampu rem, lampu kota, lampu sein, dan lampu mundur, serta menjadi elemen penting untuk visibilitas dan keselamatan saat berkendara.', 450000, 26, '1751895886.jpg', 4, 2, 1, '2025-07-07 06:44:46', '2025-07-07 09:28:10'),
-(39, 'Sensor Abs Depan Revo RH 89542-0K050', 'sensor-abs-depan-revo-rh-89542-0k050', 'Sensor ABS depan Toyota Hilux Revo adalah komponen penting dalam sistem Anti-lock Braking System (ABS) yang berfungsi mendeteksi kecepatan rotasi roda depan. Sensor ini mengirimkan data ke ECU ABS untuk mencegah penguncian roda saat pengereman mendadak, sehingga menjaga stabilitas dan kontrol kendaraan.', 325000, 9, '1751896052.jpg', 6, 3, 6, '2025-07-07 06:47:32', '2025-07-07 08:50:43');
+(38, 'Stoplamp Hilux Revo 2015 RH', 'stoplamp-hilux-revo-2015-rh', 'Stoplamp Hilux Revo adalah lampu belakang yang digunakan pada Toyota Hilux generasi ke-8, dikenal sebagai Hilux Revo, yang diluncurkan mulai tahun 2015 hingga sekarang. Komponen ini berfungsi sebagai lampu rem, lampu kota, lampu sein, dan lampu mundur, serta menjadi elemen penting untuk visibilitas dan keselamatan saat berkendara.', 450000, 22, '1751895886.jpg', 4, 2, 1, '2025-07-07 06:44:46', '2025-07-24 05:53:28'),
+(39, 'Sensor Abs Depan Revo RH 89542-0K050', 'sensor-abs-depan-revo-rh-89542-0k050', 'Sensor ABS depan Toyota Hilux Revo adalah komponen penting dalam sistem Anti-lock Braking System (ABS) yang berfungsi mendeteksi kecepatan rotasi roda depan. Sensor ini mengirimkan data ke ECU ABS untuk mencegah penguncian roda saat pengereman mendadak, sehingga menjaga stabilitas dan kontrol kendaraan.', 325000, 7, '1751896052.jpg', 6, 3, 6, '2025-07-07 06:47:32', '2025-07-24 05:53:28');
 
 -- --------------------------------------------------------
 
@@ -571,7 +583,12 @@ INSERT INTO `transactions` (`id`, `user_id`, `order_id`, `mode`, `status`, `snap
 (16, 4, 16, 'transfer', 'settlement', '663cb2ab-e077-4fd4-865e-bf6984eca1fd', '2025-07-07 08:48:21', '2025-07-07 08:49:49'),
 (17, 4, 17, 'cod', 'pending', '', '2025-07-07 08:50:43', '2025-07-07 08:50:43'),
 (18, 4, 18, 'transfer', 'settlement', '5b772854-cf39-4f13-897c-2181f502dea4', '2025-07-07 09:26:58', '2025-07-07 09:27:31'),
-(19, 4, 19, 'transfer', 'settlement', '0af25b69-bcab-4b6f-9a63-5b885f313e34', '2025-07-07 09:28:10', '2025-07-07 09:29:08');
+(19, 4, 19, 'transfer', 'settlement', '0af25b69-bcab-4b6f-9a63-5b885f313e34', '2025-07-07 09:28:10', '2025-07-07 09:29:08'),
+(20, 2, 20, 'transfer', 'pending', '', '2025-07-24 05:50:58', '2025-07-24 05:50:58'),
+(21, 2, 21, 'transfer', 'pending', '29d8216b-6017-4884-bb84-f5ba6689378b', '2025-07-24 05:51:40', '2025-07-24 05:51:41'),
+(22, 2, 22, 'transfer', 'pending', '', '2025-07-24 05:53:18', '2025-07-24 05:53:18'),
+(23, 2, 23, 'transfer', 'pending', '80c3f088-7031-4dc7-93f6-cebda8665ead', '2025-07-24 05:53:28', '2025-07-24 05:53:30'),
+(24, 2, 24, 'transfer', 'settlement', 'abcb66bf-7500-4911-8532-8e7f004fca4e', '2025-07-24 05:54:07', '2025-07-24 05:54:29');
 
 -- --------------------------------------------------------
 
@@ -875,13 +892,13 @@ ALTER TABLE `month_names`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -917,7 +934,7 @@ ALTER TABLE `suppliers`
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `users`
