@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ecommerce;
 use App\Models\products;
 use App\Models\brands;
-use App\Models\Categories;
+use App\Models\categories;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -45,9 +45,9 @@ class EcommerceController extends Controller
                 $o_column='id';
                 $o_order='DESC';
         }
-        $brands = Brands::orderBy('name','ASC')->get();
-        $categories = Categories::orderBy('name','ASC')->get();
-        $products = Products::where(function($query) use($f_brands, $f_categories) {
+        $brands = brands::orderBy('name','ASC')->get();
+        $categories = categories::orderBy('name','ASC')->get();
+        $products = products::where(function($query) use($f_brands, $f_categories) {
             if (!empty($f_brands)) {
                 $query->whereIn('brand_id', explode(',', $f_brands));
             }
@@ -62,8 +62,8 @@ class EcommerceController extends Controller
 
     public function details($product_slug)
     {
-        $product = Products::where("slug",$product_slug)->first();
-        $rproducts = Products::where("slug","<>",$product_slug)->get()->take(8);
+        $product = products::where("slug",$product_slug)->first();
+        $rproducts = products::where("slug","<>",$product_slug)->get()->take(8);
         return view('pages.details',compact("product","rproducts"));
     }
 
