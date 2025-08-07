@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\user_addresses;
+use App\Models\UserAddress;
 use App\Models\account;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -15,7 +15,7 @@ class AccountController extends Controller
 
     public function account_address()
     {
-        $addresses = user_addresses::where('user_id', Auth::user()->id)->first();
+        $addresses = UserAddress::where('user_id', Auth::user()->id)->first();
         return view('pages.account-address', compact('addresses'));
     }
 

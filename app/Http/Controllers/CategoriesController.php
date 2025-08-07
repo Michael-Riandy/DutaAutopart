@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Categories;
+use App\Models\categories;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -14,7 +14,7 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $categories = Categories::orderBy('id','asc')->paginate(10);
+        $categories = categories::orderBy('id','asc')->paginate(10);
         return view('dashboard.categories', compact('categories'));
     }
 

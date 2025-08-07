@@ -6,7 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\View;
-use App\Models\Products;
+use App\Models\products;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         View::composer('*', function ($view) {
-            $lowStockProducts = Products::where('quantity', '<', 5)->get();
+            $lowStockProducts = products::where('quantity', '<', 5)->get();
             $view->with('lowStockProducts', $lowStockProducts);
         });
 

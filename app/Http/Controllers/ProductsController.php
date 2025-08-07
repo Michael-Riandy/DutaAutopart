@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\products;
 use App\Models\categories;
-use App\Models\Brands;
+use App\Models\brands;
 use App\Models\product_prices;
 use App\Models\suppliers;
 use Carbon\Carbon;
@@ -18,7 +18,7 @@ class ProductsController extends Controller
 {
     public function index()
     {
-        $products = Products::with(['brand', 'supplier', 'category'])->orderBy('id', 'asc')->paginate(10);
+        $products = products::with(['brand', 'supplier', 'category'])->orderBy('id', 'asc')->paginate(10);
         return view("dashboard.products",compact('products'));
     }
 
@@ -28,7 +28,7 @@ class ProductsController extends Controller
     public function create()
     {
         $categories = categories::Select('id','name')->orderBy('id')->get();
-        $brands = Brands::Select('id','name')->orderBy('id')->get();
+        $brands = brands::Select('id','name')->orderBy('id')->get();
         $suppliers = suppliers::Select('id','name')->orderBy('id')->get();
 
         return view("dashboard.products-add",compact('categories','brands','suppliers'));
@@ -91,7 +91,7 @@ class ProductsController extends Controller
 
 
         $categories = categories::all();
-        $brands = Brands::all();
+        $brands = brands::all();
         $suppliers = suppliers::all();
         $product = products::findOrFail($id); // Gunakan findOrFail agar error jika ID tidak ditemukan
 
