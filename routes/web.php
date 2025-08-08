@@ -81,10 +81,10 @@ Route::middleware(['auth'])->group(function(){
 
     Route::get('/cart',[CartController::class,'index'])->name('pages.cart.index');
     Route::post('/cart/store', [CartController::class, 'add_to_cart'])->name('pages.cart.store');
-    Route::get('/cart/increase-quantity/{rowId}', [CartController::class, 'increase'])->name('pages.cart.qty.increase');
-    Route::get('/cart/decrease-quantity/{rowId}', [CartController::class, 'decrease'])->name('pages.cart.qty.decrease');
-    Route::get('/cart/remove/{rowId}',[CartController::class,'remove'])->name('pages.cart.remove');
-    Route::get('/cart/clear',[CartController::class,'empty_cart'])->name('pages.cart.empty');
+    Route::put('/cart/increase-quantity/{rowId}', [CartController::class, 'increase'])->name('pages.cart.qty.increase');
+    Route::put('/cart/decrease-quantity/{rowId}', [CartController::class, 'decrease'])->name('pages.cart.qty.decrease');
+    Route::delete('/cart/remove/{rowId}',[CartController::class,'remove'])->name('pages.cart.remove');
+    Route::delete('/cart/clear',[CartController::class,'empty_cart'])->name('pages.cart.empty');
 
     Route::get('/contact-us',[HomeController::class,'contact'])->name('pages.contact');
     Route::post('/contact/store', [HomeController::class, 'contact_store'])->name('pages.contact.store');
